@@ -29,7 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout().logoutSuccessUrl("/").permitAll()
                 .and()
                 .csrf().disable();
-
     }
 
     @Bean
@@ -38,7 +37,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             String id = (String) map.get("sub");
             User user = userRepository.findById(id).orElseGet(() -> {
                 User newUser = new User();
-
                 newUser.setId(id);
                 newUser.setName((String) map.get("name"));
                 newUser.setEmail((String) map.get("email"));
