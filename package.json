@@ -1,0 +1,27 @@
+{
+  "name": "course-work-java-spring-rest",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/anatolyageev/course-work-java-spring-rest.git",
+  "author": "Anatolii Ageev <anatol1812@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server"
+  },
+  "dependencies": {
+    "@stomp/stompjs": "^6.1.0",
+    "sockjs-client": "^1.5.0",
+    "vue": "^2.6.12",
+    "vue-resource": "^1.5.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "babel-loader": "^8.0.1",
+    "vue-loader": "^15.4.1",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  }
+}
