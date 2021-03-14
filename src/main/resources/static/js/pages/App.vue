@@ -1,13 +1,22 @@
 <template>
-    <div>
-        <div v-if="!profile"> Please login
-            <a href="/login">Google</a>
-        </div>
-        <div v-else>
-            <div>{{profile.name}}&nbsp;<a href="/logout">Logout</a></div>
-            <messages-list :messages="messages"/>
-        </div>
-    </div>
+    <v-app app>
+        <v-app-bar app color="indigo">
+           <span v-if="profile">  {{ profile.name }}</span>
+            <v-spacer></v-spacer>
+            <v-btn icon href="/logout">
+                <v-icon>exit_to_app</v-icon>
+            </v-btn>
+        </v-app-bar>
+        <v-main>
+            <v-container v-if="!profile"> Please login
+                    <a href="/login">Google</a>
+                </v-container>
+                <v-container v-if="profile">
+                    <messages-list :messages="messages"/>
+                </v-container>
+
+        </v-main>
+    </v-app>
 </template>
 
 <script>
@@ -28,9 +37,9 @@
         created() {
             addHandler(data => {
                 let index = getIndex(this.messages, data.id)
-                if(index>-1){
-                    this.messages.splice(index,1,data)
-                }else {
+                if (index > -1) {
+                    this.messages.splice(index, 1, data)
+                } else {
                     this.messages.push(data)
                 }
             })

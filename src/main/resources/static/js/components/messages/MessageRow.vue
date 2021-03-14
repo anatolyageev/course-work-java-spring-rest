@@ -1,11 +1,15 @@
 <template>
-    <div>
+    <v-card class="my-2">
+        <v-card-title primary-title>
         <i>({{message.id}})</i>{{message.text}}
-        <span>
-        <input type="button" value="Edit" @click="edit"/> 
-        <input type="button" value="Del" @click="del"/> 
-        </span>
-    </div>
+        </v-card-title>
+        <v-card-actions>
+            <v-btn @click="edit" small text rounded>Edit</v-btn>
+            <v-btn icon @click="del" small>
+               <v-icon>delete</v-icon>
+            </v-btn>
+        </v-card-actions>
+    </v-card>
 </template>
 
 <script>
