@@ -1,39 +1,48 @@
 <template>
     <v-app app>
         <v-app-bar app color="indigo">
-           <span v-if="profile">  {{ profile.name }}</span>
+            <v-btn text
+                   v-if="profile"
+                   :disabled="$route.path === '/'"
+                   @click="showMessages">
+                Messages
+            </v-btn>
             <v-spacer></v-spacer>
+            <v-btn text
+                   v-if="profile"
+                   :disabled="$route.path === '/profile'"
+                   @click="showProfile"> {{ profile.name }}
+            </v-btn>
             <v-btn icon href="/logout">
                 <v-icon>exit_to_app</v-icon>
             </v-btn>
         </v-app-bar>
         <v-main>
-            <v-container v-if="!profile"> Please login
-                    <a href="/login">Google</a>
-                </v-container>
-                <v-container v-if="profile">
-                    <messages-list />
-                </v-container>
-
+            <router-view></router-view>
         </v-main>
     </v-app>
 </template>
 
 <script>
-    import { mapState, mapMutations } from 'vuex'
-    import MessagesList from "components/messages/MessageList.vue"
-    import { addHandler } from "util/ws";
+    import {mapState, mapMutations} from 'vuex'
+    import {addHandler} from "util/ws";
 
 
     export default {
-        components: {
-            MessagesList
-        },
         computed: mapState(['profile']),
-        methods: mapMutations(['addMessageMutation','updateMessageMutation','removeMessageMutation']),
+        methods: {
+            ...mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
+            showMessages() {
+                this.$router.push('/')
+            },
+            showProfile() {
+                this.$router.push('/profile')
+            }
+
+        },
         created() {
             addHandler(data => {
-                if (data.objectType === 'MESSAGE' ) {
+                if (data.objectType === 'MESSAGE') {
                     switch (data.eventType) {
                         case 'CREATE':
                             this.addMessageMutation(data.body)
@@ -47,10 +56,15 @@
                         default:
                             console.error(`Event type not found "${data.eventType}"`)
                     }
-                }else {
+                } else {
                     console.error(`Object type not found "${data.objectType}"`)
                 }
             })
+        },
+        beforeMount() {
+            if (!this.profile) {
+                this.$router.replace('/auth')
+            }
         }
     }
 </script>
