@@ -4,13 +4,13 @@ import messagesApi from "api/messages";
 
 Vue.use(Vuex)
 
-export default  new Vuex.Store({
+export default new Vuex.Store({
     state: {
         messages: frontendData.messages,
         profile: frontendData.profile
     },
-    getters:{
-        sortedMessages: state => state.messages.sort((a,b)=> b.id - a.id )
+    getters: {
+        sortedMessages: state => (state.messages || []).sort((a, b) => b.id - a.id)
     },
 
     mutations: {
@@ -40,7 +40,7 @@ export default  new Vuex.Store({
             }
         },
     },
-    actions:{
+    actions: {
         async addMessageAction({commit, state}, message) {
             const result = await messagesApi.add(message)
             const data = await result.json()
