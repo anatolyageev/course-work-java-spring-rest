@@ -1,6 +1,7 @@
 package com.itstep.java.ageev.courseworkjavaspringrest.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
@@ -18,8 +19,11 @@ import lombok.experimental.FieldDefaults;
 @Data
 public class User implements Serializable {
     @Id
+    @JsonView(Views.IdName.class)
     String id;
+    @JsonView(Views.IdName.class)
     String name;
+    @JsonView(Views.IdName.class)
     String userPic;
     String email;
     String gender;

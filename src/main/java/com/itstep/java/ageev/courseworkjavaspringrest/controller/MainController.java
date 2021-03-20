@@ -1,6 +1,10 @@
 package com.itstep.java.ageev.courseworkjavaspringrest.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.itstep.java.ageev.courseworkjavaspringrest.domain.User;
+import com.itstep.java.ageev.courseworkjavaspringrest.domain.Views;
 import com.itstep.java.ageev.courseworkjavaspringrest.repository.MessageRepository;
 import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,22 +22,28 @@ public class MainController {
 
     @Value("${spring.profiles.active}")
     private String profile;
+    private final ObjectWriter writer;
 
     @Autowired
-    public MainController(MessageRepository messageRepository) {
+    public MainController(MessageRepository messageRepository, ObjectMapper mapper) {
         this.messageRepository = messageRepository;
+        this.writer = mapper
+                .setConfig(mapper.getSerializationConfig())
+                .writerWithView(Views.FullMessage.class);
     }
 
     @GetMapping
-    public String main(Model model, @AuthenticationPrincipal User user) {
+    public String main(Model model, @AuthenticationPrincipal User user) throws JsonProcessingException {
         HashMap<Object, Object> data = new HashMap<>();
 
         if (user != null) {
             data.put("profile", user);
-            data.put("messages", messageRepository.findAll());
+
+            String massages = writer.writeValueAsString(messageRepository.findAll());
+
+            model.addAttribute("messages", massages);
         }
         model.addAttribute("frontendData", data);
-//            model.addAttribute("isDevMode", true);
         model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";
     }

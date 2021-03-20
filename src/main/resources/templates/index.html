@@ -8,7 +8,9 @@
     <title>itStep</title>
 
     <script th:inline="javascript">
-        let frontendData = [[${frontendData}]]
+        var frontendData = [[${frontendData}]];
+        var messages = [# th:utext="${messages}" /];
+
     </script>
 </head>
 <body>
