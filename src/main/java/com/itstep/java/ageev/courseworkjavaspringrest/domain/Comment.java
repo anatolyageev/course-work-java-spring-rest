@@ -1,5 +1,6 @@
 package com.itstep.java.ageev.courseworkjavaspringrest.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,11 +28,12 @@ public class Comment {
     private String text;
     @ManyToOne
     @JoinColumn(name = "message_id")
+    @JsonView(Views.IdName.class)
     private Message message;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false,updatable = false)
-    @JsonView(Views.FullMessage.class)
+    @JsonView(Views.IdName.class)
     private User author;
 
 }
