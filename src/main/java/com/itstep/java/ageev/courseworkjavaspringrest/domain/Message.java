@@ -1,8 +1,11 @@
 package com.itstep.java.ageev.courseworkjavaspringrest.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
@@ -17,12 +20,17 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 @Data
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@EqualsAndHashCode(exclude = "text")
+@EqualsAndHashCode(of = {"id"})
+@ToString(of = {"id","text"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                    property = "id")
+//@Table
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
