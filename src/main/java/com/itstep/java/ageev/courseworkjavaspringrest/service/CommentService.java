@@ -25,10 +25,11 @@ public class CommentService {
 
     public Comment create(Comment comment, User user){
         comment.setAuthor(user);
-        Comment commentFromDb = commentRepository.save(comment);
+       Comment commentFromDB =  commentRepository.save(comment);
 
-        wsSender.accept(EventType.CREATE, commentFromDb);
+        wsSender.accept(EventType.CREATE, commentFromDB);
 
-        return commentFromDb;
+        return commentFromDB;
+
     }
 }

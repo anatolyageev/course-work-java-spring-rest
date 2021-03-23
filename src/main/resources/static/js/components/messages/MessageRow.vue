@@ -13,13 +13,16 @@
                     >
                 </v-avatar>
 
-                <v-avatar v-else color="indigo" size="36px" >
+ 
+                <v-avatar v-else color="indigo" size="46px" >
+
                     <v-icon dark>
                         mdi-account-circle
                     </v-icon>
                 </v-avatar>
-              <span class="pl-3">{{ authorName }}</span>
+                <span class="pl-3">{{ authorName }}</span>
             </div>
+
             <div class="pt-3">
                 {{ message.text }}
             </div>
@@ -40,16 +43,16 @@
     </v-card>
 </template>
 <script>
-    import {mapActions} from 'vuex'
-    import Media from "components/media/Media.vue";
-    import CommentList from "../comment/CommentList.vue";
-
+    import { mapActions } from 'vuex'
+    import Media from "components/media/Media.vue"
+    import CommentList from "../comment/CommentList.vue"
     export default {
         props: ['message', 'editMessage'],
-        components: {CommentList, Media},
+        components:{ CommentList, Media },
         computed: {
             authorName() {
-               return  this.message.author ? this.message.author.name : 'unknown'
+                return  this.message.author ? this.message.author.name : 'unknown'
+
             }
         },
         methods: {

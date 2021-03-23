@@ -31,12 +31,11 @@
     export default {
         computed: mapState(['profile']),
         methods: {
-            ...mapMutations([
-                'addMessageMutation',
+            ...mapMutations(['addMessageMutation',
                 'updateMessageMutation',
                 'removeMessageMutation',
-                'addCommentMutation'
-            ]),
+            'addCommentMutation']),
+
             showMessages() {
                 this.$router.push('/')
             },
@@ -60,6 +59,7 @@
                             break
                         default:
                             console.error(`Event type not found "${data.eventType}"`)
+
                     }
                 } else if (data.objectType === 'COMMENT') {
                     switch (data.eventType) {
@@ -68,7 +68,9 @@
                             break
                         default:
                             console.error(`Event type not found "${data.eventType}"`)
+
                     }
+
                 } else{
                     console.error(`Object type not found "${data.objectType}"`)
                 }

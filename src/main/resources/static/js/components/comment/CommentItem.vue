@@ -3,6 +3,7 @@
         <v-list-item-avatar>
             <v-img :src="comment.author.userPic"></v-img>
         </v-list-item-avatar>
+
         <v-list-item-content>
             <v-list-item-title>{{comment.text}}</v-list-item-title>
             <v-list-item-subtitle> {{ comment.author.name }}</v-list-item-subtitle>
@@ -13,7 +14,7 @@
 
 <script>
     export default {
-        name: "CommentItem",
+        name: 'CommentItem',
         props: ['comment']
     }
 </script>
