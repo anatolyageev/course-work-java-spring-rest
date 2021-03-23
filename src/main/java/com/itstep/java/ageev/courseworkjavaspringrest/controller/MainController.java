@@ -42,7 +42,9 @@ public class MainController {
             String massages = writer.writeValueAsString(messageRepository.findAll());
 
             model.addAttribute("messages", massages);
-        }
+        }       else{
+        model.addAttribute("messages", "[]");
+    }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));
         return "index";

@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-       messages: messages,
+        messages: messages,
         profile: frontendData.profile
     },
     getters: {
@@ -44,7 +44,7 @@ export default new Vuex.Store({
             const updateIndex = state.messages.findIndex(item => item.id === comment.message.id)
             const message = state.messages[updateIndex]
 
-            if(!message.comments.find(it=>it.id === comment.id)) {
+            if (!message.comments.find(it => it.id === comment.id)) { // TODO если новый мессеж проблема с добавлением от сюда
 
                 state.messages = [
                     ...state.messages.slice(0, updateIndex),
@@ -84,10 +84,10 @@ export default new Vuex.Store({
                 commit('removeMessageMutation', message)
             }
         },
-        async addCommentAction({commit, state}, comment){
+        async addCommentAction({commit, state}, comment) {
             const response = await commentApi.add(comment)
             const data = await response.json()
-            commit('addCommentMutation', comment)
+            commit('addCommentMutation', data)
         }
     }
 })
