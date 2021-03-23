@@ -56,9 +56,11 @@ public class MainController {
 
             model.addAttribute("messages", messages);
 
+ feature_resolving_cicle_dependancy
             data.put("currentPage", messagePageDto.getCurrentPage());
             data.put("totalPages", messagePageDto.getTotalPages());
         } else {
+
             model.addAttribute("messages", "[]");
         }
         model.addAttribute("frontendData", data);

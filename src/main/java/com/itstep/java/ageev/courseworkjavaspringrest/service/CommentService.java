@@ -30,5 +30,6 @@ public class CommentService {
         wsSender.accept(EventType.CREATE, commentFromDB);
 
         return commentFromDB;
+
     }
 }

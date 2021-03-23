@@ -7,8 +7,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+
         messages: messages,
         ...frontendData
+
     },
     getters: {
         sortedMessages: state => (state.messages || []).sort((a, b) => b.id - a.id)
@@ -45,6 +47,7 @@ export default new Vuex.Store({
             const message = state.messages[updateIndex]
 
             if (!message.comments.find(it => it.id === comment.id)) { // TODO если новый мессеж проблема с добавлением от сюда
+
 
                 state.messages = [
                     ...state.messages.slice(0, updateIndex),
@@ -113,6 +116,7 @@ export default new Vuex.Store({
             commit('addMessagePageMutation', data.messages)
             commit('updateTotalPageMutation', data.totalPages)
             commit('updateCurrentPageMutation', Math.min(data.currentPage, data.totalPages - 1))
+
         }
     }
 })

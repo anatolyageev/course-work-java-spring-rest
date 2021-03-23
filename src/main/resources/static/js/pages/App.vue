@@ -35,6 +35,7 @@
                 'updateMessageMutation',
                 'removeMessageMutation',
             'addCommentMutation']),
+
             showMessages() {
                 this.$router.push('/')
             },
@@ -69,6 +70,7 @@
                             console.error(`Event type not found "${data.eventType}"`)
 
                     }
+
                 } else{
                     console.error(`Object type not found "${data.objectType}"`)
                 }

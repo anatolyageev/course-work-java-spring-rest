@@ -13,14 +13,15 @@
                     >
                 </v-avatar>
 
+ 
                 <v-avatar v-else color="indigo" size="46px" >
+
                     <v-icon dark>
                         mdi-account-circle
                     </v-icon>
                 </v-avatar>
                 <span class="pl-3">{{ authorName }}</span>
             </div>
-
 
             <div class="pt-3">
                 {{ message.text }}
@@ -30,7 +31,7 @@
         <v-card-actions>
             <v-btn @click="edit" small text rounded>Edit</v-btn>
             <v-btn icon @click="del" small>
-               <v-icon>delete</v-icon>
+                <v-icon>delete</v-icon>
             </v-btn>
         </v-card-actions>
         <comment-list
@@ -51,6 +52,7 @@
         computed: {
             authorName() {
                 return  this.message.author ? this.message.author.name : 'unknown'
+
             }
         },
         methods: {

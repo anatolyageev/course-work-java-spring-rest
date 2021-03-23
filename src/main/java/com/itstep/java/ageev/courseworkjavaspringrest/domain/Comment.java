@@ -1,5 +1,6 @@
 package com.itstep.java.ageev.courseworkjavaspringrest.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonView;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
