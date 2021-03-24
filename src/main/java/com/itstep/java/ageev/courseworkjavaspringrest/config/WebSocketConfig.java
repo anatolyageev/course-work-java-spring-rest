@@ -1,4 +1,4 @@
-package com.itstep.java.ageev.courseworkjavaspringrest.controller;
+package com.itstep.java.ageev.courseworkjavaspringrest.config;
 
 
 import org.springframework.context.annotation.Configuration;
