@@ -43,20 +43,36 @@ export default new Vuex.Store({
         addCommentMutation(state, comment) {
             const updateIndex = state.messages.findIndex(item => item.id === comment.message.id)
             const message = state.messages[updateIndex]
-
-            if (!message.comments.find(it => it.id === comment.id)) { // TODO если новый мессеж проблема с добавлением от сюда
-
+            // console.log('SSSSSSSSSSSSSSSSSSSSSS: ')
+            // console.log( message.comments )
+            if(message.comments === null){
                 state.messages = [
                     ...state.messages.slice(0, updateIndex),
                     {
                         ...message,
                         comments: [
-                            ...message.comments,
-                            comment
+                              comment
                         ]
                     },
+
                     ...state.messages.slice(updateIndex + 1)
-                ]
+                    ]
+            }else {
+
+                if (!message.comments.find(it => it.id === comment.id)) { // TODO если новый мессеж проблема с добавлением от сюда
+
+                    state.messages = [
+                        ...state.messages.slice(0, updateIndex),
+                        {
+                            ...message,
+                            comments: [
+                                ...message.comments,
+                                comment
+                            ]
+                        },
+                        ...state.messages.slice(updateIndex + 1)
+                    ]
+                }
             }
         }
     },

@@ -48,7 +48,7 @@ public class MessageController {
     @Autowired
     public MessageController(MessageRepository messageRepository, WsSender wsSender) {
         this.messageRepository = messageRepository;
-        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.IdName.class);
+        this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
     @GetMapping
@@ -65,6 +65,7 @@ public class MessageController {
     }
 
     @PostMapping
+    @JsonView(Views.FullMessage.class)
     public Message create(@RequestBody Message message,
                           @AuthenticationPrincipal User user) throws IOException {
         message.setCreatedAt(LocalDateTime.now());
@@ -76,8 +77,9 @@ public class MessageController {
     }
 
     @PutMapping("{id}")
+    @JsonView(Views.FullMessage.class)
     public Message update(@PathVariable("id") Message messageFromDb, @RequestBody Message message) throws IOException {
-        BeanUtils.copyProperties(message, messageFromDb, "id");
+       messageFromDb.setText(message.getText());
         fillMeta(messageFromDb);
         Message updatedMessage = messageRepository.save(messageFromDb);
         wsSender.accept(EventType.UPDATE, updatedMessage);
