@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 @Entity
@@ -56,6 +58,7 @@ public class User implements Serializable {
             property = "id",
             generator = ObjectIdGenerators.PropertyGenerator.class
     )
+    @ToString.Exclude
     Set<User> subscriptions = new HashSet<>();
 
     @ManyToMany
@@ -70,5 +73,6 @@ public class User implements Serializable {
             property = "id",
             generator = ObjectIdGenerators.PropertyGenerator.class
     )
+    @ToString.Exclude
     Set<User> subscribers = new HashSet<>();
 }
