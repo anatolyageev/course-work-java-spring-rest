@@ -11,10 +11,12 @@ export default new Vuex.Store({
         // profile: frontendData.profile
         messages,
         profile,
+        users,
         ...frontendData
     },
     getters: {
-        sortedMessages: state => (state.messages || []).sort((a, b) => b.id - a.id)
+        sortedMessages: state => (state.messages || []).sort((a, b) => b.id - a.id),
+        getAllUser: state => (state.users|| []).sort((a, b) => b.id - a.id)
     },
 
     mutations: {
@@ -131,6 +133,8 @@ export default new Vuex.Store({
             commit('addMessagePageMutation', data.messages)
             commit('updateTotalPagesMutation', data.totalPages)
             commit('updateCurrentPageMutation', Math.min(data.currentPage, data.totalPages - 1))
-        }
+        },
+
+
     }
 })

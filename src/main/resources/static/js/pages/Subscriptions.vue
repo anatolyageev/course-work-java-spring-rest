@@ -17,21 +17,44 @@
                     </v-btn>
                 </v-list-tile>
             </v-list>
+            <v-list>
+                <v-subheader>
+                    All users
+                </v-subheader>
+                <v-list-tile v-for="userL in getAllUser">
+                    <user-link
+                            :user="userL"
+                            size="24"
+                    ></user-link>
+                </v-list-tile>
+            </v-list>
+<!--            <users-list></users-list>-->
         </v-layout>
+
     </v-container>
+
+
+
 </template>
 
 <script>
     import profileApi from 'api/profile'
     import UserLink from 'components/UserLink.vue'
+    import { mapGetters } from 'vuex'
+    import UsersList from "components/UsersList.vue";
 
     export default {
         name: 'Subscriptions',
-        components: {UserLink},
+        components: {UsersList, UserLink},
         data() {
             return {
                 subscriptions: []
+
             }
+        },
+        // computed: mapGetters(['getAllUser']),
+        computed: {
+            getAllUser(){return  this.$store.getters.getAllUser}
         },
         methods: {
             async changeSubscriptionStatus(subscriberId) {
@@ -48,11 +71,17 @@
                     },
                     ...this.subscriptions.slice(subscriptionIndex + 1)
                 ]
-            }
+            },
+
+
         },
+
+
         async beforeMount() {
             const resp = await profileApi.subscriberList(this.$store.state.profile.id)
+            const lustUsers = this.$store.state.users
             this.subscriptions = await resp.json()
+            this.users =lustUsers
         }
     }
 </script>

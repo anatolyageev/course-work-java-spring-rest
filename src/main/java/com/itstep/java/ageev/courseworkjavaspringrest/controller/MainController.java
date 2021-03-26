@@ -9,6 +9,7 @@ import com.itstep.java.ageev.courseworkjavaspringrest.dto.MessagePageDto;
 import com.itstep.java.ageev.courseworkjavaspringrest.repository.UserRepository;
 import com.itstep.java.ageev.courseworkjavaspringrest.service.MessageService;
 import java.util.HashMap;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +32,7 @@ public class MainController {
     private final ObjectWriter profileWriter;
 
     @Autowired
-    public MainController(MessageService messageService,UserRepository userRepository, ObjectMapper mapper) {
+    public MainController(MessageService messageService, UserRepository userRepository, ObjectMapper mapper) {
         this.messageService = messageService;
         this.userRepository = userRepository;
 
@@ -52,20 +53,25 @@ public class MainController {
             User userFromDb = userRepository.findById(user.getId()).get();
             String serializedProfile = profileWriter.writeValueAsString(userFromDb);
             model.addAttribute("profile", serializedProfile);
-
+            String users =  profileWriter.writeValueAsString(userRepository.findAll());
             Sort sort = Sort.by(Sort.Direction.DESC, "id");
             PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
 
             MessagePageDto messagePageDto = messageService.findForUser(pageRequest, user);
 
             String massages = messageWriter.writeValueAsString(messagePageDto.getMessages());
-
+            System.out.println("=========================================================");
+            System.out.println(massages);
+            System.out.println(users);
+            System.out.println("=========================================================");
             model.addAttribute("messages", massages);
+            model.addAttribute("users", users);
             data.put("currentPage", messagePageDto.getCurrentPage());
             data.put("totalPages", messagePageDto.getTotalPages());
         } else {
             model.addAttribute("messages", "[]");
             model.addAttribute("profile", "null");
+            model.addAttribute("users", "[]");
         }
         model.addAttribute("frontendData", data);
         model.addAttribute("isDevMode", "dev".equals(profile));

@@ -48,4 +48,8 @@ public class ProfileService {
 
         return userSubscriptionRepository.save(subscription);
     }
+
+    public List<User> getAll() {
+        return (List<User>) userRepository.findAll();
+    }
 }

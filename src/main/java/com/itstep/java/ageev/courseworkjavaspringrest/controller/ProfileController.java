@@ -20,6 +20,12 @@ public class ProfileController {
         this.profileService = profileService;
     }
 
+    @GetMapping
+    @JsonView(Views.FullProfile.class)
+    public List<User> getAll(){
+        return profileService.getAll();
+    }
+
     @GetMapping("{id}")
     @JsonView(Views.FullProfile.class)
     public User get(@PathVariable("id") User user) {
