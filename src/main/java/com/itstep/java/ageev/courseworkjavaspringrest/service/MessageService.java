@@ -2,12 +2,14 @@ package com.itstep.java.ageev.courseworkjavaspringrest.service;
 
 import com.itstep.java.ageev.courseworkjavaspringrest.domain.Message;
 import com.itstep.java.ageev.courseworkjavaspringrest.domain.User;
+import com.itstep.java.ageev.courseworkjavaspringrest.domain.UserSubscription;
 import com.itstep.java.ageev.courseworkjavaspringrest.domain.Views;
 import com.itstep.java.ageev.courseworkjavaspringrest.dto.EventType;
 import com.itstep.java.ageev.courseworkjavaspringrest.dto.MessagePageDto;
 import com.itstep.java.ageev.courseworkjavaspringrest.dto.MetaDto;
 import com.itstep.java.ageev.courseworkjavaspringrest.dto.ObjectType;
 import com.itstep.java.ageev.courseworkjavaspringrest.repository.MessageRepository;
+import com.itstep.java.ageev.courseworkjavaspringrest.repository.UserSubscriptionRepository;
 import com.itstep.java.ageev.courseworkjavaspringrest.util.WsSender;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -33,11 +36,15 @@ public class MessageService {
     private static final Pattern IMG_REGEX = Pattern.compile(IMAGE_PATTERN, Pattern.CASE_INSENSITIVE);
 
     private final MessageRepository messageRepository;
+    private final UserSubscriptionRepository userSubscriptionRepository;
     private final BiConsumer<EventType, Message> wsSender;
 
     @Autowired
-    public MessageService(MessageRepository messageRepository, WsSender wsSender) {
+    public MessageService(MessageRepository messageRepository,
+                          UserSubscriptionRepository userSubscriptionRepository,
+                          WsSender wsSender) {
         this.messageRepository = messageRepository;
+        this.userSubscriptionRepository = userSubscriptionRepository;
         this.wsSender = wsSender.getSender(ObjectType.MESSAGE, Views.FullMessage.class);
     }
 
@@ -103,8 +110,13 @@ public class MessageService {
         return updatedMessage;
     }
 
-    public MessagePageDto findAll(Pageable pageable) {
-        Page<Message> page =  messageRepository.findAll(pageable);
+    public MessagePageDto findForUser(Pageable pageable, User user) {
+        List<User> channels = userSubscriptionRepository.findBySubscriber(user)
+                .stream()
+                .map(UserSubscription::getChannel)
+                .collect(Collectors.toList());
+        channels.add(user);
+        Page<Message> page =  messageRepository.findByAuthorIn(channels, pageable);
         return new MessagePageDto(
                 page.getContent(),
                 pageable.getPageNumber(),
