@@ -1,21 +1,30 @@
 <template>
     <v-container>
         <v-layout justify-space-around>
-            <v-flex :xs6="!$vuetify.breakpoint.xsOnly" >
+            <v-flex :xs6="!$vuetify.breakpoint.xsOnly">
                 <div class="title mb-3">User profile</div>
                 <v-layout row justify-space-between>
                     <v-flex class="px-1">
                         <v-img :src="profile.userPic"></v-img>
                     </v-flex>
-                    <v-flex  class="px-1">
+                    <v-flex class="px-1">
                         <v-layout column>
                             <v-flex>{{profile.name}}</v-flex>
                             <v-flex>{{profile.locale}}</v-flex>
                             <v-flex>{{profile.gender}}</v-flex>
-<!--                            <v-flex>{{profile.email}}</v-flex>-->
+                            <!--                            <v-flex>{{profile.email}}</v-flex>-->
                             <v-flex>{{profile.lastVisit}}</v-flex>
                             <v-flex>{{profile.subscriptions && profile.subscriptions.length}} subscriptions</v-flex>
-                            <v-flex>{{profile.subscribers && profile.subscribers.length}} subscribers</v-flex>
+                            <router-link
+                                    v-if="isMyProfile"
+                                    :to="`/subscriptions/${profile.id}`"
+                            >
+                                {{profile.subscribers && profile.subscribers.length}} subscribers
+                            </router-link>
+                            <v-flex
+                                    v-else
+                            >{{profile.subscribers && profile.subscribers.length}} subscribers
+                            </v-flex>
                         </v-layout>
                     </v-flex>
                 </v-layout>
@@ -29,7 +38,7 @@
             </v-btn>
         </v-layout>
 
-        </v-container>
+    </v-container>
 </template>
 
 <script>
@@ -54,8 +63,8 @@
                     })
             }
         },
-        watch:{
-            '$route'(){
+        watch: {
+            '$route'() {
                 this.updateProfile()
             }
         },
@@ -78,8 +87,8 @@
 </script>
 
 <style scoped>
-img{
-    max-width: 20%;
-    height: 10px;
-}
+    img {
+        max-width: 20%;
+        height: 10px;
+    }
 </style>

@@ -2,8 +2,10 @@ package com.itstep.java.ageev.courseworkjavaspringrest.controller;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.itstep.java.ageev.courseworkjavaspringrest.domain.User;
+import com.itstep.java.ageev.courseworkjavaspringrest.domain.UserSubscription;
 import com.itstep.java.ageev.courseworkjavaspringrest.domain.Views;
 import com.itstep.java.ageev.courseworkjavaspringrest.service.ProfileService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +37,20 @@ public class ProfileController {
         } else {
             return profileService.changeSubscription(channel, subscriber);
         }
+    }
+
+    @GetMapping("get-subscribers/{channelId}")
+    @JsonView(Views.IdName.class)
+    public List<UserSubscription> subscribers(
+            @PathVariable("channelId")  User channel){
+        return profileService.getSubscribers(channel);
+    }
+
+    @PostMapping("change-status/{subscriberId}")
+    @JsonView(Views.IdName.class)
+    public UserSubscription changeSubscriptionStatus(
+           @AuthenticationPrincipal User channel,
+            @PathVariable("subscriberId") User subscriber){
+        return profileService.changeSubscriptionStatus(channel, subscriber);
     }
 }
