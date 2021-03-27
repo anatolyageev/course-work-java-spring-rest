@@ -11,7 +11,7 @@ const routes = [
     {path: '/', component: MessagesList},
     {path: '/auth', component: Auth},
     {path: '/user/:id?', component: Profile},
-    {path: '/subscriptions/:id', component: Subscriptions},,
+    {path: '/subscriptions/:id', component: Subscriptions},
     {path: '*', component: MessagesList}
 ]
 

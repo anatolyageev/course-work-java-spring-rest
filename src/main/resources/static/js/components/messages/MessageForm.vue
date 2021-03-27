@@ -15,7 +15,6 @@
 <script>
     import {mapActions} from 'vuex'
 
-
     export default {
         props: ['messageAttr'],
         data() {

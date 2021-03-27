@@ -20,7 +20,6 @@
                 :comments="message.comments"
                 :message-id="message.id"
         >
-
         </comment-list>
     </v-card>
 </template>

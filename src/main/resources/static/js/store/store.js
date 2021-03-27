@@ -7,8 +7,6 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        // messages: messages,
-        // profile: frontendData.profile
         messages,
         profile,
         users,
@@ -48,8 +46,6 @@ export default new Vuex.Store({
         addCommentMutation(state, comment) {
             const updateIndex = state.messages.findIndex(item => item.id === comment.message.id)
             const message = state.messages[updateIndex]
-            // console.log('SSSSSSSSSSSSSSSSSSSSSS: ')
-            // console.log( message.comments )
             if(message.comments === null){
                 state.messages = [
                     ...state.messages.slice(0, updateIndex),
@@ -64,7 +60,7 @@ export default new Vuex.Store({
                     ]
             }else {
 
-                if (!message.comments.find(it => it.id === comment.id)) { // TODO если новый мессеж проблема с добавлением от сюда
+                if (!message.comments.find(it => it.id === comment.id)) {
 
                     state.messages = [
                         ...state.messages.slice(0, updateIndex),

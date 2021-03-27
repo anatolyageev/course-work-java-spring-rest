@@ -9,7 +9,6 @@ import com.itstep.java.ageev.courseworkjavaspringrest.dto.MessagePageDto;
 import com.itstep.java.ageev.courseworkjavaspringrest.repository.UserRepository;
 import com.itstep.java.ageev.courseworkjavaspringrest.service.MessageService;
 import java.util.HashMap;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -60,10 +59,6 @@ public class MainController {
             MessagePageDto messagePageDto = messageService.findForUser(pageRequest, user);
 
             String massages = messageWriter.writeValueAsString(messagePageDto.getMessages());
-            System.out.println("=========================================================");
-            System.out.println(massages);
-            System.out.println(users);
-            System.out.println("=========================================================");
             model.addAttribute("messages", massages);
             model.addAttribute("users", users);
             data.put("currentPage", messagePageDto.getCurrentPage());

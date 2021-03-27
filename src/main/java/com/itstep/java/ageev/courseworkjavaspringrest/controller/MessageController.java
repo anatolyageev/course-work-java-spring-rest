@@ -49,13 +49,6 @@ public class MessageController {
         return message;
     }
 
-//    @GetMapping("{id}")
-//    @JsonView(Views.FullMessage.class)
-//    public Message getOne(@PathVariable("id") Long id) {
-//        return messageRepository.findById(id)
-//                .orElseThrow(MessageNotFoundException::new);
-//    }
-
     @PostMapping
     @JsonView(Views.FullMessage.class)
     public Message create(@RequestBody Message message,

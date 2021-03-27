@@ -17,6 +17,8 @@
                     </v-btn>
                 </v-list-tile>
             </v-list>
+        </v-layout>
+        <v-layout justify-space-around>
             <v-list>
                 <v-subheader>
                     All users
@@ -28,7 +30,6 @@
                     ></user-link>
                 </v-list-tile>
             </v-list>
-<!--            <users-list></users-list>-->
         </v-layout>
 
     </v-container>
@@ -49,10 +50,8 @@
         data() {
             return {
                 subscriptions: []
-
             }
         },
-        // computed: mapGetters(['getAllUser']),
         computed: {
             getAllUser(){return  this.$store.getters.getAllUser}
         },
